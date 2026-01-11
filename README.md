@@ -46,6 +46,17 @@ This project uses a remote Terraform backend to support safe, collaborative infr
 - Supports production-grade Infrastructure as Code (IaC) practices
 
 ---
+### Phase 3B: CloudWatch Monitoring & Auto Scaling
+
+To improve reliability and cost efficiency, CloudWatch alarms and Auto Scaling policies were added.
+
+#### Features
+- Monitors EC2 CPU utilization using Amazon CloudWatch
+- Automatically scales out when CPU exceeds 60%
+- Scales in during low utilization to reduce costs
+- Enables self-healing infrastructure behavior
+
+---
 
 ## 🗺️ Architecture Diagram (Text)
 
