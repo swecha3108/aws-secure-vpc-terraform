@@ -30,6 +30,47 @@ It follows industry best practices by isolating workloads in private subnets, ex
   - EC2 instances allow HTTP only from the ALB
 
 ---
+## 🗺️ Architecture Diagram (Text)
+
+Internet
+  |
+  |  HTTP :80
+  v
+[ Application Load Balancer (Public Subnets) ]
+  |
+  |  forwards to Target Group (health checks)
+  v
+[ Auto Scaling Group (Private Subnets) ]
+  |
+  |  outbound only (updates/bootstrapping)
+  v
+[ NAT Gateway (Public Subnet) ] ---> Internet
+
+### Network Components
+- **Public Subnets:** ALB + NAT Gateway (egress)
+- **Private Subnets:** EC2 instances (ASG) with no direct inbound from internet
+- **Routing**
+  - Public route table: `0.0.0.0/0 → Internet Gateway`
+  - Private route table: `0.0.0.0/0 → NAT Gateway`
+
+### Security Groups
+- **ALB SG:** allows inbound `HTTP 80` from `0.0.0.0/0`
+- **App SG:** allows inbound `HTTP 80` only from **ALB SG**
+
+---
+
+## 📸 Screenshots
+
+### Application Load Balancer – Browser Test
+![ALB Browser Test](screenshots/alb-browser.png)
+
+### Target Group – Healthy Targets
+![Target Group Health](screenshots/target-group-healthy.png)
+
+### Auto Scaling Group – Running Instances in Private Subnets
+![Auto Scaling Group](screenshots/asg-running.png)
+
+---
 
 ## 🔐 Security Design
 
