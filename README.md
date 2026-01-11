@@ -30,6 +30,23 @@ It follows industry best practices by isolating workloads in private subnets, ex
   - EC2 instances allow HTTP only from the ALB
 
 ---
+
+### Phase 3: Remote Terraform State (S3 + DynamoDB)
+
+This project uses a remote Terraform backend to support safe, collaborative infrastructure deployments.
+
+#### Backend Configuration
+- **State storage:** Amazon S3 (encrypted)
+- **State locking:** DynamoDB
+- **Environment isolation:** `dev/terraform.tfstate`
+
+#### Benefits
+- Prevents concurrent Terraform runs from corrupting state
+- Enables team-based infrastructure workflows
+- Supports production-grade Infrastructure as Code (IaC) practices
+
+---
+
 ## 🗺️ Architecture Diagram (Text)
 
 Internet
